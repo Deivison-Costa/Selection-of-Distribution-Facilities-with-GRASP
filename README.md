@@ -29,3 +29,6 @@
 3. Run the program:
    ```shell
    ./grasp_distribution
+
+## Settings
+- In the main.cpp file, you can adjust the cities data, the number of distribution facilities and the number of iterations of the GRASP algorithm.
