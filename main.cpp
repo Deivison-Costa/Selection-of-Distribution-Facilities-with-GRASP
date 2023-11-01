@@ -14,35 +14,32 @@ struct Cidade {
     double longitude;
 };
 
-double dist(double lat1, double lon1, double lat2, double lon2) { // O(1)
-    // Fórmula de Haversine
+double dist(double lat1, double lon1, double lat2, double lon2) {
     double dLat = lat2 - lat1;
     double dLon = lon2 - lon1;
     double a = sin(dLat / 2) * sin(dLat / 2) + cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    return 6371 * c;  // Raio da terra em km
+    return 6371 * c;
 }
 
-// Complexidade de tempo de O(maxIter * numInstalacoes * cidades.size() * numInstalacoes)
-// Complexidade de espaço de O(numInstalacoes + cidades.size())
 string grasp(vector<Cidade>& cidades, int numInstalacoes) {
     const int maxIter = 1000;
 
     vector<int> melhoresSolucoes(numInstalacoes, 0);
     double melhoresCustos = numeric_limits<double>::max();
 
-    for (int i = 0; i < maxIter; i++) { // O(maxIter)
+    for (int i = 0; i < maxIter; i++) {
         vector<int> solucaoAtual(numInstalacoes, 0);
         double custoAtual = 0.0;
 
-        for (int j = 0; j < numInstalacoes; j++) { // O(numInstalacoes)
+        for (int j = 0; j < numInstalacoes; j++) {
             int indiceAleatorio = rand() % cidades.size();
             solucaoAtual[j] = indiceAleatorio;
         }
 
-        for (int j = 0; j < cidades.size(); j++) { // O(cidades.size())
+        for (int j = 0; j < cidades.size(); j++) {
             double minDist = numeric_limits<double>::max();
-            for (int k = 0; k < numInstalacoes; k++) { //  O(numInstalacoes)
+            for (int k = 0; k < numInstalacoes; k++) {
                 double d = dist(cidades[j].latitude, cidades[j].longitude, cidades[solucaoAtual[k]].latitude, cidades[solucaoAtual[k]].longitude);
                 if (d < minDist) {
                     minDist = d;
@@ -57,7 +54,7 @@ string grasp(vector<Cidade>& cidades, int numInstalacoes) {
         }
     }
 
-    string resultado = "Cidades selecionadas para instalações: ";
+    string resultado = "Cidades selecionadas para instalaÃ§Ãµes: ";
     for (int i = 0; i < numInstalacoes; i++) {
         resultado += "\n" + cidades[melhoresSolucoes[i]].nome + " ";
     }
@@ -67,9 +64,8 @@ string grasp(vector<Cidade>& cidades, int numInstalacoes) {
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
-    srand(time(0)); // Seed para gerar números aleatórios
+    srand(time(0));
 
-    // Vetor de cidades e coordenadas
     vector<Cidade> cidades = {
         {"Cidade 1", 40.7128, -74.0060},
         {"Cidade 2", 34.0522, -118.2437},
@@ -173,7 +169,7 @@ int main() {
         {"Cidade 100", 37.7749, -122.4194}
     };
 
-    int numInstalacoes = 4;  // Número de instalações a serem construídas
+    int numInstalacoes = 4;
 
     string solucao = grasp(cidades, numInstalacoes);
     cout << solucao << endl;
