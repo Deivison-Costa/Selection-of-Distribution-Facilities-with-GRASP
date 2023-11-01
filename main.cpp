@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Definição da estrutura de dados "Cidade" para armazenar informações de cidades.
+// estrutura Cidade
 struct Cidade {
     string nome;
     double latitude;
