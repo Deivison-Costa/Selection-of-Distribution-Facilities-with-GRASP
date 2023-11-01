@@ -8,12 +8,15 @@
 
 using namespace std;
 
+// Definição da estrutura de dados "Cidade" para armazenar informações de cidades.
 struct Cidade {
     string nome;
     double latitude;
     double longitude;
 };
 
+// Função para calcular a distância entre duas coordenadas geográficas.
+// Complexidade de tempo: O(1)
 double dist(double lat1, double lon1, double lat2, double lon2) {
     double dLat = lat2 - lat1;
     double dLon = lon2 - lon1;
@@ -22,41 +25,44 @@ double dist(double lat1, double lon1, double lat2, double lon2) {
     return 6371 * c;
 }
 
+// algoritmo GRASP
+// Complexidade de tempo: O(maxIter * numInstalacoes * cidades.size() * numInstalacoes)
+// Complexidade de espaço: O(cidades.size())
 string grasp(vector<Cidade>& cidades, int numInstalacoes) {
     const int maxIter = 1000;
 
-    vector<int> melhoresSolucoes(numInstalacoes, 0);
-    double melhoresCustos = numeric_limits<double>::max();
+    vector<int> melhoresSolucoes(numInstalacoes, 0);  // armazena as melhores soluções encontradas.
+    double melhoresCustos = numeric_limits<double>::max();  // armazena o menor custo entre as soluções.
 
-    for (int i = 0; i < maxIter; i++) {
-        vector<int> solucaoAtual(numInstalacoes, 0);
-        double custoAtual = 0.0;
+    for (int i = 0; i < maxIter; i++) { // loop principal que executa o GRASP maxIter vezes.
+        vector<int> solucaoAtual(numInstalacoes, 0); // representa a solução atual.
+        double custoAtual = 0.0;  // armazena o custo da solução atual.
 
-        for (int j = 0; j < numInstalacoes; j++) {
-            int indiceAleatorio = rand() % cidades.size();
-            solucaoAtual[j] = indiceAleatorio;
+        for (int j = 0; j < numInstalacoes; j++) { // loop para escolher aleatoriamente locais de instalação.
+            int indiceAleatorio = rand() % cidades.size(); // escolhe um índice aleatório.
+            solucaoAtual[j] = indiceAleatorio; // armazena o índice na solução atual.
         }
 
-        for (int j = 0; j < cidades.size(); j++) {
-            double minDist = numeric_limits<double>::max();
+        for (int j = 0; j < cidades.size(); j++) { // loop para calcular o custo da solução atual.
+            double minDist = numeric_limits<double>::max(); // inicializa a distância mínima com um valor grande.
             for (int k = 0; k < numInstalacoes; k++) {
                 double d = dist(cidades[j].latitude, cidades[j].longitude, cidades[solucaoAtual[k]].latitude, cidades[solucaoAtual[k]].longitude);
                 if (d < minDist) {
-                    minDist = d;
+                    minDist = d; // atualiza a distância mínima se uma mais curta for encontrada.
                 }
             }
-            custoAtual += minDist;
+            custoAtual += minDist; // acumula a distância mínima no custo total da solução atual.
         }
 
         if (custoAtual < melhoresCustos) {
-            melhoresCustos = custoAtual;
-            melhoresSolucoes = solucaoAtual;
+            melhoresCustos = custoAtual; // atualiza o menor custo encontrado até agora.
+            melhoresSolucoes = solucaoAtual; // armazena a solução como a melhor solução.
         }
     }
 
     string resultado = "Cidades selecionadas para instalações: ";
     for (int i = 0; i < numInstalacoes; i++) {
-        resultado += "\n" + cidades[melhoresSolucoes[i]].nome + " ";
+        resultado += "\n" + cidades[melhoresSolucoes[i]].nome + " "; // string do resultado com as cidades escolhidas.
     }
 
     return resultado;
@@ -64,7 +70,7 @@ string grasp(vector<Cidade>& cidades, int numInstalacoes) {
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
-    srand(time(0));
+    srand(time(0)); 
 
     vector<Cidade> cidades = {
         {"Cidade 1", 40.7128, -74.0060},
@@ -169,9 +175,8 @@ int main() {
         {"Cidade 100", 37.7749, -122.4194}
     };
 
-    int numInstalacoes = 4;
-
-    string solucao = grasp(cidades, numInstalacoes);
+    int numInstalacoes = 4; // nº de instalações a serem selecionadas.
+    string solucao = grasp(cidades, numInstalacoes); // aplica GRASP e define uma solução
     cout << solucao << endl;
 
     return 0;
