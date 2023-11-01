@@ -20,6 +20,7 @@ struct Cidade {
 double dist(double lat1, double lon1, double lat2, double lon2) {
     double dLat = lat2 - lat1;
     double dLon = lon2 - lon1;
+    // fórmula de haversine
     double a = sin(dLat / 2) * sin(dLat / 2) + cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
     return 6371 * c;
