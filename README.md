@@ -5,15 +5,15 @@
 - Binary variable x_i for each city i, where x_i equals 1 if a distribution facility is built in city i and 0 otherwise.
 
 ## Objective Function:
-- Minimize the total transportation cost, which is a linear function of the decision variables:
+### Minimize the total transportation cost, which is a linear function of the decision variables:
 - Minimize Z = Σ Σ (d_ij * x_i * x_j), where d_ij is the distance (transport cost) between cities i and j.
 
 ## Restrictions:
-- Each city can have a maximum of one distribution facility:
-- Σ x_i ≤ 1, for all i.
-- A maximum number of distribution facilities must be constructed:
+### Each city can have a maximum of one distribution facility:
+ Σ x_i ≤ 1, for all i.
+### A maximum number of distribution facilities must be constructed:
 - Σ x_i ≤ K, where K is a given value.
-- 
+
 ## Requirements
 - C++ compiler that supports C++11 or higher.
 
