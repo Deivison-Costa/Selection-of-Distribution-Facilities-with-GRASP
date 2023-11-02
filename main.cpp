@@ -15,8 +15,8 @@ struct Cidade {
     double longitude;
 };
 
-// Função para calcular a distância entre duas coordenadas geográficas.
-// Complexidade de tempo: O(1)
+// função para calcular a distância entre duas coordenadas geográficas.
+// complexidade de tempo: O(1)
 double dist(double lat1, double lon1, double lat2, double lon2) {
     double dLat = lat2 - lat1;
     double dLon = lon2 - lon1;
@@ -27,13 +27,13 @@ double dist(double lat1, double lon1, double lat2, double lon2) {
 }
 
 // algoritmo GRASP
-// Complexidade de tempo: O(maxIter * numInstalacoes * cidades.size() * numInstalacoes)
-// Complexidade de espaço: O(cidades.size())
+// complexidade de tempo: O(maxIter * numInstalacoes * cidades.size() * numInstalacoes)
+// complexidade de espaço: O(cidades.size())
 string grasp(vector<Cidade>& cidades, int numInstalacoes) {
     const int maxIter = 1000;
 
     vector<int> melhoresSolucoes(numInstalacoes, 0);  // armazena as melhores soluções encontradas.
-    double melhoresCustos = numeric_limits<double>::max();  // armazena o menor custo entre as soluções.
+    double menorCusto = numeric_limits<double>::max();  // armazena o menor custo entre as soluções.
 
     for (int i = 0; i < maxIter; i++) { // loop principal que executa o GRASP maxIter vezes.
         vector<int> solucaoAtual(numInstalacoes, 0); // representa a solução atual.
@@ -55,8 +55,8 @@ string grasp(vector<Cidade>& cidades, int numInstalacoes) {
             custoAtual += minDist; // acumula a distância mínima no custo total da solução atual.
         }
 
-        if (custoAtual < melhoresCustos) {
-            melhoresCustos = custoAtual; // atualiza o menor custo encontrado até agora.
+        if (custoAtual < menorCusto) {
+            menorCusto = custoAtual; // atualiza o menor custo encontrado até agora.
             melhoresSolucoes = solucaoAtual; // armazena a solução como a melhor solução.
         }
     }
@@ -177,7 +177,7 @@ int main() {
     };
 
     int numInstalacoes = 4; // nº de instalações a serem selecionadas.
-    string solucao = grasp(cidades, numInstalacoes); // aplica GRASP e define uma solução
+    string solucao = grasp(cidades, numInstalacoes); // aplica GRASP e mostra a solução
     cout << solucao << endl;
 
     return 0;
