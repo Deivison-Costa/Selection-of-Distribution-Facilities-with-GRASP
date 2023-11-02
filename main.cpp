@@ -63,7 +63,7 @@ string grasp(vector<Cidade>& cidades, int numInstalacoes) {
 
     string resultado = "Cidades selecionadas para instalações: ";
     for (int i = 0; i < numInstalacoes; i++) {
-        resultado += "\n" + cidades[melhoresSolucoes[i]].nome + " "; // string do resultado com as cidades escolhidas.
+        resultado += "\n" + cidades[melhoresSolucoes[i]].nome; // string do resultado com as cidades escolhidas.
     }
 
     return resultado;
